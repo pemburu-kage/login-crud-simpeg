@@ -14,11 +14,12 @@ app.use(bodyParser.urlencoded({
 app.use(morgan('dev'));
 app.get('/', function (req, res) { res.send('hello, world!') });
 require("./routers/user")(app);
+require("./routers/golpang")(app);
 
 //bisa pakai ini
-app.get("*", () => {
-  throw new ErrorHandler(404, "Halaman tidak ada");
-});
+// app.get("*", () => {
+//   throw new ErrorHandler(404, "Halaman tidak ada");
+// });
 
 //atau ini :
 app.get("*", (err, res) => {

@@ -7,7 +7,6 @@ module.exports = function(app){
     app.put("/api/simpeg/user/:userId", controller.updateUser);
     app.delete("/api/simpeg/user/:userId", controller.deleteUser);
     
-    //app.get("/api/simpeg/signup", controller.signUp);
+    app.get("/api/simpeg/signup", controller.signUp);
     app.post("/api/simpeg/signin", controller.signIn);
 }
-

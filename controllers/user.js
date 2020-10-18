@@ -1,40 +1,40 @@
-const Users = require("../models").tbuser;
+const DataUser = require("../models").tbuser;
 const bcrypt  = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const { handleError, ErrorHandler } = require("../helper/error");
 
-// exports.signUp = (req, res) => {
-// const { nama, username, email, hakAkses, foto*/ } = req.body;
+exports.signUp = (req, res) => {
+  const { nama, username, email, hakAkses, foto } = req.body;
 
-//   Users.create({
-//     nama,
-//     username,
-//     email,
-//     hakAkses,
-//     password: bcrypt.hashSync(req.body.password, salt)/*,
-//     foto: req.body.foto*/
-//   })
-//   .then(data => {
-//     res.status(201).send({
-//       message: "User ditambahkan",
-//       users: data
-//     })
-//   })
-// }
+  DataUser.create({
+    nama,
+    username,
+    email,
+    hakAkses,
+    password: bcrypt.hashSync(req.body.password, salt),
+    foto
+  })
+  .then(data => {
+    res.status(201).send({
+      pesan: "User ditambahkan",
+      hasil: data
+    })
+  })
+}
 
 exports.signIn = (req, res) => {
-  const user = Users.findOne({
-    where: { email: req.body.email }
+  const user = DataUser.findOne({
+    where: { username: req.body.username }
   })
   .then(data => {
     if(!data) {
-      handleError({statusCode: 404, message: "Email tidak terdaftar!!"}, res);
+      handleError({statusCode: 404, message: "username tidak terdaftar!!"}, res);
     } else {
       const authorized = bcrypt.compareSync( req.body.password, data.password );
       if(authorized) {
         res.status(200).send({
-          message: "Berhasil login",  
-          user: data
+          pesan: "Berhasil login",  
+          hasil: data
         })
       } else {
         handleError({statusCode: 402, message: "Password salah!"}, res);  
@@ -44,10 +44,10 @@ exports.signIn = (req, res) => {
 }
 
 exports.readAllUsers = (req, res) =>{
-  Users.findAll()
+  DataUser.findAll()
   .then(data =>{
     res.status(200).send({
-      users: data
+      hasil: data
     })
   })
   .catch(err => {
@@ -57,7 +57,7 @@ exports.readAllUsers = (req, res) =>{
 
 exports.createUsers = (req, res) =>{
   const { nama, username, email, hakAkses, foto } = req.body;
-    Users.create({      
+  DataUser.create({      
       nama,
       username,
       email,
@@ -67,8 +67,8 @@ exports.createUsers = (req, res) =>{
     })
     .then(data =>{
         res.status(201).send({
-          message: "User berhasil ditambahkan",
-          users: data
+          pesan: "User berhasil ditambahkan",
+          hasil: data
         })
     })
     .catch(err => {
@@ -79,7 +79,7 @@ exports.createUsers = (req, res) =>{
 exports.readUserById = (req, res) => {
   const userId = req.params.userId;
 
-  Users.findOne({
+  DataUser.findOne({
     where: { id: userId}
   })
   .then(data => {
@@ -87,7 +87,7 @@ exports.readUserById = (req, res) => {
       handleError({statusCode: 404, message: "User tidak ditemukan!"}, res);
     } else {
       res.status(200).send({
-        user: data
+        hasil: data
       })
     }
   })
@@ -96,14 +96,14 @@ exports.readUserById = (req, res) => {
 exports.updateUser = (req, res) => {
   const userId = req.params.userId;
 
-  Users.findOne({
+  DataUser.findOne({
     where: { id: userId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "User tidak dapat diperbarui!"}, res);
     } else {
-      Users.update(
+      DataUser.update(
         {                 
           nama: req.body.nama,
           username: req.body.username,
@@ -116,7 +116,7 @@ exports.updateUser = (req, res) => {
       })
       res.status(200).send({
         pesan: "User berhasil di perbarui",
-        jumlah_objek: data
+        hasil: data
       })
     }
   })
@@ -125,19 +125,19 @@ exports.updateUser = (req, res) => {
 exports.deleteUser = (req, res) => {
   const userId = req.params.userId;
 
-  Users.findOne({
+  DataUser.findOne({
     where: { id: userId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "User tidak dikenal!"}, res);
     } else {
-      Users.destroy({
+      DataUser.destroy({
           where: { id: userId }
       })
       res.status(200).send({
         pesan: "User berhasil di hapus",
-        jumlah_objek: data
+        hasil: data
       })
     }
   })
