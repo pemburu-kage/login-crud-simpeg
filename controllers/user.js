@@ -2,6 +2,7 @@ const DataUser = require("../models").tbuser;
 const bcrypt  = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const { handleError, ErrorHandler } = require("../helper/error");
+const { Op } = require("sequelize");
 
 exports.signUp = (req, res) => {
   const { nama, username, email, hakAkses, foto } = req.body;

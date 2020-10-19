@@ -11,6 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tbpegawai.belongsTo(models.tbuser, {
+        foreignKey: "penginputPeg",
+        as: "userData",
+        sourceKey: "id",
+      });
+      tbpegawai.hasMany(models.tbpangkat, {
+        foreignKey: "id",
+        as: "pegawaiData",
+        sourceKey: "id"
+      })
     }
   };
   tbpegawai.init({
