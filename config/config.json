@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "dbsimpeg",
+    "password": "password",
+    "database": "learn_sequelize",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
