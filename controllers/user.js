@@ -17,7 +17,7 @@ exports.signUp = (req, res) => {
   })
   .then(data => {
     res.status(201).send({
-      pesan: "User ditambahkan",
+      pesan: "User ditambahkan!",
       hasil: data
     })
   })
@@ -29,7 +29,7 @@ exports.signIn = (req, res) => {
   })
   .then(data => {
     if(!data) {
-      handleError({statusCode: 404, message: "username tidak terdaftar!!"}, res);
+      handleError({statusCode: 404, message: "username tidak terdaftar!"}, res);
     } else {
       const authorized = bcrypt.compareSync( req.body.password, data.password );
       if(authorized) {
@@ -68,7 +68,7 @@ exports.createUsers = (req, res) =>{
     })
     .then(data =>{
         res.status(201).send({
-          pesan: "User berhasil ditambahkan",
+          pesan: "User berhasil ditambahkan!",
           hasil: data
         })
     })
@@ -116,7 +116,7 @@ exports.updateUser = (req, res) => {
         { where: { id: userId }
       })
       res.status(200).send({
-        pesan: "User berhasil di perbarui",
+        pesan: "User berhasil diperbarui!",
         hasil: data
       })
     }
@@ -137,7 +137,7 @@ exports.deleteUser = (req, res) => {
           where: { id: userId }
       })
       res.status(200).send({
-        pesan: "User berhasil di hapus",
+        pesan: "User berhasil dihapus!",
         hasil: data
       })
     }

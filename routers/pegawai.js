@@ -5,5 +5,5 @@ module.exports = function(app){
     app.post("/api/simpeg/pegawai", controller.createPegawais);
     app.get("/api/simpeg/pegawai/:pegawaiId", controller.readPegawaiById);
     app.put("/api/simpeg/pegawai/:pegawaiId", controller.updatePegawai);
-    app.delete("/api/simpeg/pegawai/:pegawaiId", controller.deletePegawai);
+    app.delete("/api/simpeg/pegawai/:pegawaiId", controller.deletePegawai); 
 }

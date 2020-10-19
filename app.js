@@ -20,14 +20,14 @@ require("./routers/pangkat")(app);
 
 //bisa pakai ini
 // app.get("*", () => {
-//   throw new ErrorHandler(404, "Halaman tidak ada");
+//   throw new ErrorHandler(404, "Halaman tidak ada!");
 // });
 
 //atau ini :
 app.get("*", (err, res) => {
   handleError({
     statusCode: 404, 
-    message: "Halaman tidak ditemukan !"
+    message: "Halaman tidak ditemukan!"
   }, res);
 });
 

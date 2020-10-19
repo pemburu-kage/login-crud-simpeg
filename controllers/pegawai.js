@@ -75,7 +75,7 @@ exports.createPegawais = (req, res) =>{
   })
   .then(data =>{
     res.status(201).send({
-      pesan: "Pegawai berhasil ditambahkan",
+      pesan: "Pegawai berhasil ditambahkan!",
       hasil: data
     })
   })
@@ -123,7 +123,7 @@ exports.updatePegawai = (req, res) => {
         { where: { id: pegawaiId }
       })
       res.status(200).send({
-        pesan: "Pegawai berhasil di perbarui",
+        pesan: "Pegawai berhasil diperbarui!",
         hasil: data
       })
     }
@@ -144,7 +144,7 @@ exports.deletePegawai = (req, res) => {
           where: { id: pegawaiId }
       })
       res.status(200).send({
-        pesan: "Pegawai berhasil di hapus",
+        pesan: "Pegawai berhasil dihapus!",
         hasil: data
       })
     }

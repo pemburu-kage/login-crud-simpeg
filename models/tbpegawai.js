@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       tbpegawai.belongsTo(models.tbuser, {
         foreignKey: "penginputPeg",
         as: "userData",
-        sourceKey: "id"
+        sourceKey: "id" 
       });
       tbpegawai.hasMany(models.tbpangkat, {
         foreignKey: "id",

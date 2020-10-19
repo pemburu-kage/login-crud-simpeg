@@ -5,5 +5,5 @@ module.exports = function(app){
     app.post("/api/simpeg/pangkat", controller.createPangkats);
     app.get("/api/simpeg/pangkat/:pangkatId", controller.readPangkatById);
     app.put("/api/simpeg/pangkat/:pangkatId", controller.updatePangkat);
-    app.delete("/api/simpeg/pangkat/:pangkatId", controller.deletePangkat);
+    app.delete("/api/simpeg/pangkat/:pangkatId", controller.deletePangkat); 
 }

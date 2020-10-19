@@ -21,7 +21,7 @@ exports.createGolpangs = (req, res) =>{
   })
   .then(data =>{
     res.status(201).send({
-      pesan: "Golpang berhasil ditambahkan",
+      pesan: "Golpang berhasil ditambahkan!",
       hasil: data
     })
   })
@@ -65,7 +65,7 @@ exports.updateGolpang = (req, res) => {
         { where: { id: golpangId }
       })
       res.status(200).send({
-        pesan: "Golpang berhasil di perbarui",
+        pesan: "Golpang berhasil diperbarui!",
         hasil: data
       })
     }
@@ -86,7 +86,7 @@ exports.deleteGolpang = (req, res) => {
           where: { id: golpangId }
       })
       res.status(200).send({
-        pesan: "Golpang berhasil di hapus",
+        pesan: "Golpang berhasil dihapus!",
         hasil: data
       })
     }
