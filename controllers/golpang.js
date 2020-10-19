@@ -1,8 +1,8 @@
-const DataGolpang = require("../models").tbgolpang;
+const dataGolpang = require("../models").tbgolpang;
 const { handleError, ErrorHandler } = require("../helper/error");
 
 exports.readAllGolpangs = (req, res) =>{
-  DataGolpang.findAll()
+  dataGolpang.findAll()
   .then(data =>{
     res.status(200).send({
       hasil: data
@@ -15,7 +15,7 @@ exports.readAllGolpangs = (req, res) =>{
 
 exports.createGolpangs = (req, res) =>{
   const { golongan, pangkat } = req.body;
-  DataGolpang.create({      
+  dataGolpang.create({      
     golongan,
     pangkat
   })
@@ -33,7 +33,7 @@ exports.createGolpangs = (req, res) =>{
 exports.readGolpangById = (req, res) => {
   const golpangId = req.params.golpangId;
 
-  DataGolpang.findOne({
+  dataGolpang.findOne({
     where: { id: golpangId}
   })
   .then(data => {
@@ -50,14 +50,14 @@ exports.readGolpangById = (req, res) => {
 exports.updateGolpang = (req, res) => {
   const golpangId = req.params.golpangId;
 
-  DataGolpang.findOne({
+  dataGolpang.findOne({
     where: { id: golpangId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "Golpang tidak dapat diperbarui!"}, res);
     } else {
-      DataGolpang.update(
+      dataGolpang.update(
         {                 
           golongan: req.body.golongan,
           pangkat: req.body.pangkat        
@@ -75,14 +75,14 @@ exports.updateGolpang = (req, res) => {
 exports.deleteGolpang = (req, res) => {
   const golpangId = req.params.golpangId;
 
-  DataGolpang.findOne({
+  dataGolpang.findOne({
     where: { id: golpangId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "Golpang tidak dikenal!"}, res);
     } else {
-      DataGolpang.destroy({
+      dataGolpang.destroy({
           where: { id: golpangId }
       })
       res.status(200).send({

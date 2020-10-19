@@ -1,8 +1,8 @@
-const DataPangkat = require("../models").tbpangkat;
+const dataPangkat = require("../models").tbpangkat;
 const { handleError, ErrorHandler } = require("../helper/error");
 
 exports.readAllPangkats = (req, res) =>{
-  DataPangkat.findAll()
+  dataPangkat.findAll()
   .then(data =>{
     res.status(200).send({
       hasil: data
@@ -15,7 +15,7 @@ exports.readAllPangkats = (req, res) =>{
 
 exports.createPangkats = (req, res) =>{
   const { idnip, idgolpang, tmt, glr_dpn, glr_blkng, mkptahun, mkpbulan, nomorsk, tglsk, oleh, prodi, tahun } = req.body;
-  DataPangkat.create({      
+  dataPangkat.create({      
     idnip,
     idgolpang,    
     tmt,
@@ -43,7 +43,7 @@ exports.createPangkats = (req, res) =>{
 exports.readPangkatById = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
-  DataPangkat.findOne({
+  dataPangkat.findOne({
     where: { id: pangkatId}
   })
   .then(data => {
@@ -60,14 +60,14 @@ exports.readPangkatById = (req, res) => {
 exports.updatePangkat = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
-  DataPangkat.findOne({
+  dataPangkat.findOne({
     where: { id: pangkatId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "Pangkat tidak dapat diperbarui!"}, res);
     } else {
-      DataPangkat.update(
+      dataPangkat.update(
         {                                 
           idnip: req.body.idnip,
           idgolpang: req.body.idgolpang,    
@@ -95,14 +95,14 @@ exports.updatePangkat = (req, res) => {
 exports.deletePangkat = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
-  DataPangkat.findOne({
+  dataPangkat.findOne({
     where: { id: pangkatId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "Pangkat tidak dikenal!"}, res);
     } else {
-      DataPangkat.destroy({
+      dataPangkat.destroy({
           where: { id: pangkatId }
       })
       res.status(200).send({

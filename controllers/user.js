@@ -1,4 +1,4 @@
-const DataUser = require("../models").tbuser;
+const dataUser = require("../models").tbuser;
 const bcrypt  = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const { handleError, ErrorHandler } = require("../helper/error");
@@ -7,7 +7,7 @@ const { Op } = require("sequelize");
 exports.signUp = (req, res) => {
   const { nama, username, email, hakAkses, foto } = req.body;
 
-  DataUser.create({
+  dataUser.create({
     nama,
     username,
     email,
@@ -24,7 +24,7 @@ exports.signUp = (req, res) => {
 }
 
 exports.signIn = (req, res) => {
-  const user = DataUser.findOne({
+  const user = dataUser.findOne({
     where: { username: req.body.username }
   })
   .then(data => {
@@ -45,7 +45,7 @@ exports.signIn = (req, res) => {
 }
 
 exports.readAllUsers = (req, res) =>{
-  DataUser.findAll()
+  dataUser.findAll()
   .then(data =>{
     res.status(200).send({
       hasil: data
@@ -58,7 +58,7 @@ exports.readAllUsers = (req, res) =>{
 
 exports.createUsers = (req, res) =>{
   const { nama, username, email, hakAkses, foto } = req.body;
-  DataUser.create({      
+  dataUser.create({      
       nama,
       username,
       email,
@@ -80,7 +80,7 @@ exports.createUsers = (req, res) =>{
 exports.readUserById = (req, res) => {
   const userId = req.params.userId;
 
-  DataUser.findOne({
+  dataUser.findOne({
     where: { id: userId}
   })
   .then(data => {
@@ -97,14 +97,14 @@ exports.readUserById = (req, res) => {
 exports.updateUser = (req, res) => {
   const userId = req.params.userId;
 
-  DataUser.findOne({
+  dataUser.findOne({
     where: { id: userId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "User tidak dapat diperbarui!"}, res);
     } else {
-      DataUser.update(
+      dataUser.update(
         {                 
           nama: req.body.nama,
           username: req.body.username,
@@ -126,14 +126,14 @@ exports.updateUser = (req, res) => {
 exports.deleteUser = (req, res) => {
   const userId = req.params.userId;
 
-  DataUser.findOne({
+  dataUser.findOne({
     where: { id: userId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "User tidak dikenal!"}, res);
     } else {
-      DataUser.destroy({
+      dataUser.destroy({
           where: { id: userId }
       })
       res.status(200).send({

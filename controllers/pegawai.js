@@ -1,21 +1,71 @@
-const DataPegawai = require("../models").tbpegawai;
+const dataPegawai = require("../models").tbpegawai;
+const dataUser = require("../models").tbuser;
 const { handleError, ErrorHandler } = require("../helper/error");
+const { Op } = require("sequelize");
 
 exports.readAllPegawais = (req, res) =>{
-  DataPegawai.findAll()
-  .then(data =>{
+  const limit = req.query.limit || 100;
+  const page = req.query.page || 1;
+  const offset = (page - 1) * limit;
+  const search = req.query.search;
+
+  const response = (data) => {
+    const pages = Math.ceil(data.count / limit);
     res.status(200).send({
-      hasil: data
+      limit: limit,
+      offset: offset,
+      page: `${page} dari ${pages} halaman`,
+      data: data
     })
-  })
-  .catch(err => {
-    console.log(err)
-  })   
+  }
+
+  if(search) {
+    dataPegawai.findAndCountAll({
+      where: { 
+        [Op.or]: [{ nama: {[Op.substring]: search } }] 
+      },
+      order: [["createdAt", "DESC"]],
+      offset: offset,
+      limit: limit,
+      include: { model: dataUser, as: "userData", attributes: ["nama"] }
+    })
+    .then(data => {
+      if (data.count == 0){
+        handleError({statusCode: 404, message: "Pencarian tidak ada!"}, res);        
+      } else {
+        response(data)
+      }
+    })  
+    .catch(err => {
+      console.log(err)
+    })  
+  }else{
+    //handleError({statusCode: 404, message: "Tipe pencarian tidak dikenal!"}, res);
+    dataPegawai.findAndCountAll({
+    //   where: { 
+    //     [Op.or]: [{ nama: {[Op.substring]: search } }] 
+    //   },
+      order: [["createdAt", "DESC"]],
+      offset: offset,
+      limit: limit,
+      include: { model: dataUser, as: "userData", attributes: ["nama"] }
+    })
+    .then(data => {
+      // if (data.count == 0){
+      //   handleError({statusCode: 404, message: "Pencarian tidak ada!"}, res);        
+      // } else {
+        response(data)
+      //}
+    })  
+    .catch(err => {
+      console.log(err)
+    })
+  }    
 }
 
 exports.createPegawais = (req, res) =>{
   const { nama, nip, tmp_lhr, tgl_lhr, status, penginputPeg } = req.body;
-  DataPegawai.create({      
+  dataPegawai.create({      
     nama,
     nip,    
     tmp_lhr,
@@ -37,7 +87,7 @@ exports.createPegawais = (req, res) =>{
 exports.readPegawaiById = (req, res) => {
   const pegawaiId = req.params.pegawaiId;
 
-  DataPegawai.findOne({
+  dataPegawai.findOne({
     where: { id: pegawaiId}
   })
   .then(data => {
@@ -54,14 +104,14 @@ exports.readPegawaiById = (req, res) => {
 exports.updatePegawai = (req, res) => {
   const pegawaiId = req.params.pegawaiId;
 
-  DataPegawai.findOne({
+  dataPegawai.findOne({
     where: { id: pegawaiId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "Pegawai tidak dapat diperbarui!"}, res);
     } else {
-      DataPegawai.update(
+      dataPegawai.update(
         {                     
           nama: req.body.nama,
           nip: req.body.nip,    
@@ -83,14 +133,14 @@ exports.updatePegawai = (req, res) => {
 exports.deletePegawai = (req, res) => {
   const pegawaiId = req.params.pegawaiId;
 
-  DataPegawai.findOne({
+  dataPegawai.findOne({
     where: { id: pegawaiId }
   })
   .then(data => {
     if(!data) {
       handleError({statusCode: 404, message: "Pegawai tidak dikenal!"}, res);
     } else {
-      DataPegawai.destroy({
+      dataPegawai.destroy({
           where: { id: pegawaiId }
       })
       res.status(200).send({
