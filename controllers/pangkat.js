@@ -3,7 +3,7 @@ const dataPegawai = require("../models").tbpegawai;
 const { handleError, ErrorHandler } = require("../helper/error");
 const { Op } = require("sequelize");
 
-exports.readAllPangkats = (req, res) =>{
+exports.readAll = (req, res) =>{
     const limit = req.query.limit || 100;
     const page = req.query.page || 1;
     const offset = (page - 1) * limit;
@@ -55,7 +55,7 @@ exports.readAllPangkats = (req, res) =>{
     }    
 }  
 
-exports.createPangkats = (req, res) =>{
+exports.create = (req, res) =>{
   const { idnip, idgolpang, tmt, glr_dpn, glr_blkng, mkptahun, mkpbulan, nomorsk, tglsk, oleh, prodi, tahun } = req.body;
   dataPangkat.create({      
     idnip,
@@ -82,7 +82,7 @@ exports.createPangkats = (req, res) =>{
   })
 };
 
-exports.readPangkatById = (req, res) => {
+exports.read = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
   dataPangkat.findOne({
@@ -99,7 +99,7 @@ exports.readPangkatById = (req, res) => {
   })
 }
 
-exports.updatePangkat = (req, res) => {
+exports.update = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
   dataPangkat.findOne({
@@ -134,7 +134,7 @@ exports.updatePangkat = (req, res) => {
   })
 }
 
-exports.deletePangkat = (req, res) => {
+exports.destroy = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
   dataPangkat.findOne({

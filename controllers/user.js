@@ -44,7 +44,7 @@ exports.signIn = (req, res) => {
   })
 }
 
-exports.readAllUsers = (req, res) =>{
+exports.readAll = (req, res) =>{
   dataUser.findAll()
   .then(data =>{
     res.status(200).send({
@@ -56,7 +56,7 @@ exports.readAllUsers = (req, res) =>{
   })   
 }
 
-exports.createUsers = (req, res) =>{
+exports.create = (req, res) =>{
   const { nama, username, email, hakAkses, foto } = req.body;
   dataUser.create({      
       nama,
@@ -77,7 +77,7 @@ exports.createUsers = (req, res) =>{
     })
 };
 
-exports.readUserById = (req, res) => {
+exports.read = (req, res) => {
   const userId = req.params.userId;
 
   dataUser.findOne({
@@ -94,7 +94,7 @@ exports.readUserById = (req, res) => {
   })
 }
 
-exports.updateUser = (req, res) => {
+exports.update = (req, res) => {
   const userId = req.params.userId;
 
   dataUser.findOne({
@@ -123,7 +123,7 @@ exports.updateUser = (req, res) => {
   })
 }
 
-exports.deleteUser = (req, res) => {
+exports.destroy = (req, res) => {
   const userId = req.params.userId;
 
   dataUser.findOne({

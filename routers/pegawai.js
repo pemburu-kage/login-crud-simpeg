@@ -1,9 +1,11 @@
-module.exports = function(app){
-    const controller = require("../controllers/pegawai");
+const express = require('express');
+const router = express.Router();
+const controller = require("../controllers/pegawai");
 
-    app.get("/api/simpeg/pegawai", controller.readAllPegawais);
-    app.post("/api/simpeg/pegawai", controller.createPegawais);
-    app.get("/api/simpeg/pegawai/:pegawaiId", controller.readPegawaiById);
-    app.put("/api/simpeg/pegawai/:pegawaiId", controller.updatePegawai);
-    app.delete("/api/simpeg/pegawai/:pegawaiId", controller.deletePegawai); 
-}
+router.get("/", controller.readAll);
+router.post("/", controller.create);
+router.get("/:pegawaiId", controller.read);
+router.put("/:pegawaiId", controller.update);
+router.delete("/:pegawaiId", controller.destroy);
+
+module.exports = router;

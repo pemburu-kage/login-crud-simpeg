@@ -12,11 +12,8 @@ app.use(bodyParser.urlencoded({
   })
 );
 app.use(morgan('dev'));
-app.get('/', function (req, res) { res.send('hello, world!') });
-require("./routers/user")(app);
-require("./routers/golpang")(app);
-require("./routers/pegawai")(app);
-require("./routers/pangkat")(app);
+const router = require('./routers');
+app.use('/api/simpeg/', router);
 
 //bisa pakai ini
 // app.get("*", () => {
