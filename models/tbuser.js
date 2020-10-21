@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      tbuser.hasMany(models.tbpegawai, {
-        foreignKey: "id",
-        as: "userData",
-        sourceKey: "id"
-      })
     }
   };
   tbuser.init({

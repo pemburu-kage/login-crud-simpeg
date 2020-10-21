@@ -1,5 +1,6 @@
 const dataPangkat = require("../models").tbpangkat;
 const dataPegawai = require("../models").tbpegawai;
+const dataGolpang = require("../models").tbgolpang;
 const { handleError, ErrorHandler } = require("../helper/error");
 const { Op } = require("sequelize");
 
@@ -27,7 +28,10 @@ exports.readAll = (req, res) =>{
         order: [["createdAt", "DESC"]],
         offset: offset,
         limit: limit,
-        include: { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] }
+        include: [
+                  { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] },
+                  { model: dataGolpang, as: "golpangData", attributes: ["golongan","pangkat"] }
+                 ]
       })
       .then(data => {
         if (data.count == 0){
@@ -44,7 +48,10 @@ exports.readAll = (req, res) =>{
         order: [["createdAt", "DESC"]],
         offset: offset,
         limit: limit,
-        include: { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] }
+        include: [
+                  { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] },
+                  { model: dataGolpang, as: "golpangData", attributes: ["golongan","pangkat"] }
+                 ]
       })
       .then(data => {
           response(data)

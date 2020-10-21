@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "pegawaiData",
         sourceKey: "id" 
       });
+      tbpangkat.belongsTo(models.tbgolpang, {
+        foreignKey: "idgolpang",
+        as: "golpangData",
+        sourceKey: "id" 
+      });
     }
   };
   tbpangkat.init({

@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       tbpegawai.belongsTo(models.tbuser, {
         foreignKey: "penginputPeg",
-        as: "userData",
+        as: "userInputData",
         sourceKey: "id" 
       });
-      tbpegawai.hasMany(models.tbpangkat, {
-        foreignKey: "id",
-        as: "pegawaiData",
-        sourceKey: "id"
-      })
+      tbpegawai.belongsTo(models.tbuser, {
+        foreignKey: "penyuntingPeg",
+        as: "userSuntingData",
+        sourceKey: "id" 
+      });
     }
   };
   tbpegawai.init({

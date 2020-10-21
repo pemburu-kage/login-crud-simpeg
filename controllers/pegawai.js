@@ -27,7 +27,10 @@ exports.readAll = (req, res) =>{
       order: [["createdAt", "DESC"]],
       offset: offset,
       limit: limit,
-      include: { model: dataUser, as: "userData", attributes: ["nama"] }
+      include: [
+                { model: dataUser, as: "userInputData", attributes: ["nama","username"] },
+                { model: dataUser, as: "userSuntingData", attributes: ["nama","username"] }
+               ]
     })
     .then(data => {
       if (data.count == 0){
@@ -48,7 +51,10 @@ exports.readAll = (req, res) =>{
       order: [["createdAt", "DESC"]],
       offset: offset,
       limit: limit,
-      include: { model: dataUser, as: "userData", attributes: ["nama"] }
+      include: [
+                { model: dataUser, as: "userInputData", attributes: ["nama","username"] },
+                { model: dataUser, as: "userSuntingData", attributes: ["nama","username"] }
+               ]
     })
     .then(data => {
       // if (data.count == 0){
