@@ -29,7 +29,7 @@ exports.readAll = (req, res) =>{
         offset: offset,
         limit: limit,
         include: [
-                  { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] },
+                  { model: dataPegawai, as: "pegawaiData", attributes: dataPegawai.data },
                   { model: dataGolpang, as: "golpangData", attributes: ["golongan","pangkat"] }
                  ]
       })
@@ -49,7 +49,7 @@ exports.readAll = (req, res) =>{
         offset: offset,
         limit: limit,
         include: [
-                  { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] },
+                  { model: dataPegawai, as: "pegawaiData", attributes: dataPegawai.data },
                   { model: dataGolpang, as: "golpangData", attributes: ["golongan","pangkat"] }
                  ]
       })
