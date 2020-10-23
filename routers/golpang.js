@@ -1,24 +1,17 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 const controller = require("../controllers/golpang");
+const verifyToken = require('../middlewares/verifyToken')
+const authorizeRole = require('../middlewares/authorizeRole')
+const { ROLE } = require('../libs/constant');
 
-// ini cukup slash aja karena di routers/index.js sudah terdaftar sebagai route /golpang
-router.get("/", controller.readAllGolpangs);
-router.post("/", controller.createGolpangs);
+router.get("/", verifyToken, authorizeRole([ROLE.ADMIN, ROLE.ESELON_I]), controller.readAll);
+router.post("/", controller.create);
 
-// clean codenya cukup :id aja, karena golpang sudah di dahului di routers/index.js
-// itu berarti sudah teridentifikasi bahwa :id tersebut mengacu pada golpang
-router.get("/:golpangId", controller.readGolpangById);
-router.put("/:golpangId", controller.updateGolpang);
-router.delete("/:golpangId", controller.deleteGolpang);
 
-// clean code untuk penamaan controller juga gk perlu di kasih nama golpang
-// cukup penamaan untuk event atau action nya aja, sebagai contoh
-// controller.readAll
-// controller.create
-// controller.read // untuk detail
-// controller.destroy // untuk delete data karena penggunaan nama pada variable atau function delete terlarang,
-// karena delete sudah di pakai javascript
-// controller.update
+router.get("/:golpangId", controller.read);
+router.put("/:golpangId", controller.update);
+router.delete("/:golpangId", controller.destroy);
+
 
 module.exports = router;

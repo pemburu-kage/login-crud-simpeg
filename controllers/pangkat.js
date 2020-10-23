@@ -1,9 +1,10 @@
 const dataPangkat = require("../models").tbpangkat;
 const dataPegawai = require("../models").tbpegawai;
+const dataGolpang = require("../models").tbgolpang;
 const { handleError, ErrorHandler } = require("../helper/error");
 const { Op } = require("sequelize");
 
-exports.readAllPangkats = (req, res) =>{
+exports.readAll = (req, res) =>{
     const limit = req.query.limit || 100;
     const page = req.query.page || 1;
     const offset = (page - 1) * limit;
@@ -27,7 +28,10 @@ exports.readAllPangkats = (req, res) =>{
         order: [["createdAt", "DESC"]],
         offset: offset,
         limit: limit,
-        include: { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] }
+        include: [
+                  { model: dataPegawai, as: "pegawaiData", attributes: dataPegawai.data },
+                  { model: dataGolpang, as: "golpangData", attributes: ["golongan","pangkat"] }
+                 ]
       })
       .then(data => {
         if (data.count == 0){
@@ -44,7 +48,10 @@ exports.readAllPangkats = (req, res) =>{
         order: [["createdAt", "DESC"]],
         offset: offset,
         limit: limit,
-        include: { model: dataPegawai, as: "pegawaiData", attributes: ["nama"] }
+        include: [
+                  { model: dataPegawai, as: "pegawaiData", attributes: dataPegawai.data },
+                  { model: dataGolpang, as: "golpangData", attributes: ["golongan","pangkat"] }
+                 ]
       })
       .then(data => {
           response(data)
@@ -55,7 +62,7 @@ exports.readAllPangkats = (req, res) =>{
     }    
 }  
 
-exports.createPangkats = (req, res) =>{
+exports.create = (req, res) =>{
   const { idnip, idgolpang, tmt, glr_dpn, glr_blkng, mkptahun, mkpbulan, nomorsk, tglsk, oleh, prodi, tahun } = req.body;
   dataPangkat.create({      
     idnip,
@@ -82,7 +89,7 @@ exports.createPangkats = (req, res) =>{
   })
 };
 
-exports.readPangkatById = (req, res) => {
+exports.read = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
   dataPangkat.findOne({
@@ -99,7 +106,7 @@ exports.readPangkatById = (req, res) => {
   })
 }
 
-exports.updatePangkat = (req, res) => {
+exports.update = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
   dataPangkat.findOne({
@@ -134,7 +141,7 @@ exports.updatePangkat = (req, res) => {
   })
 }
 
-exports.deletePangkat = (req, res) => {
+exports.destroy = (req, res) => {
   const pangkatId = req.params.pangkatId;
 
   dataPangkat.findOne({

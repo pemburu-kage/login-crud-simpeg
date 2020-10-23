@@ -12,10 +12,8 @@ app.use(bodyParser.urlencoded({
   })
 );
 app.use(morgan('dev'));
-//app.get('/', function (req, res) { res.send('hello, world!') });
 
 const router = require('./routers');
-
 
 app.use('/api/simpeg/', router);
 

@@ -1,9 +1,11 @@
-module.exports = function(app){
-    const controller = require("../controllers/pangkat");
+const express = require('express');
+const router = express.Router();
+const controller = require("../controllers/pangkat");
 
-    app.get("/api/simpeg/pangkat", controller.readAllPangkats);
-    app.post("/api/simpeg/pangkat", controller.createPangkats);
-    app.get("/api/simpeg/pangkat/:pangkatId", controller.readPangkatById);
-    app.put("/api/simpeg/pangkat/:pangkatId", controller.updatePangkat);
-    app.delete("/api/simpeg/pangkat/:pangkatId", controller.deletePangkat); 
-}
+router.get("/", controller.readAll);
+router.post("/", controller.create);
+router.get("/:pangkatId", controller.read);
+router.put("/:pangkatId", controller.update);
+router.delete("/:pangkatId", controller.destroy);
+
+module.exports = router;

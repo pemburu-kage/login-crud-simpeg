@@ -1,7 +1,7 @@
 const dataGolpang = require("../models").tbgolpang;
 const { handleError, ErrorHandler } = require("../helper/error");
 
-exports.readAllGolpangs = (req, res) =>{
+exports.readAll = (req, res) =>{
   dataGolpang.findAll()
   .then(data =>{
     res.status(200).send({
@@ -13,7 +13,7 @@ exports.readAllGolpangs = (req, res) =>{
   })   
 }
 
-exports.createGolpangs = (req, res) =>{
+exports.create = (req, res) =>{
   const { golongan, pangkat } = req.body;
   dataGolpang.create({      
     golongan,
@@ -30,7 +30,7 @@ exports.createGolpangs = (req, res) =>{
   })
 };
 
-exports.readGolpangById = (req, res) => {
+exports.read = (req, res) => {
   const golpangId = req.params.golpangId;
 
   dataGolpang.findOne({
@@ -47,7 +47,7 @@ exports.readGolpangById = (req, res) => {
   })
 }
 
-exports.updateGolpang = (req, res) => {
+exports.update = (req, res) => {
   const golpangId = req.params.golpangId;
 
   dataGolpang.findOne({
@@ -72,7 +72,7 @@ exports.updateGolpang = (req, res) => {
   })
 }
 
-exports.deleteGolpang = (req, res) => {
+exports.destroy = (req, res) => {
   const golpangId = req.params.golpangId;
 
   dataGolpang.findOne({

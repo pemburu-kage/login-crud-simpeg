@@ -3,7 +3,7 @@ const dataUser = require("../models").tbuser;
 const { handleError, ErrorHandler } = require("../helper/error");
 const { Op } = require("sequelize");
 
-exports.readAllPegawais = (req, res) =>{
+exports.readAll = (req, res) =>{
   const limit = req.query.limit || 100;
   const page = req.query.page || 1;
   const offset = (page - 1) * limit;
@@ -27,7 +27,10 @@ exports.readAllPegawais = (req, res) =>{
       order: [["createdAt", "DESC"]],
       offset: offset,
       limit: limit,
-      include: { model: dataUser, as: "userData", attributes: ["nama"] }
+      include: [
+                { model: dataUser, as: "userInputData", attributes: ["nama","username"] },
+                { model: dataUser, as: "userSuntingData", attributes: ["nama","username"] }
+               ]
     })
     .then(data => {
       if (data.count == 0){
@@ -48,7 +51,10 @@ exports.readAllPegawais = (req, res) =>{
       order: [["createdAt", "DESC"]],
       offset: offset,
       limit: limit,
-      include: { model: dataUser, as: "userData", attributes: ["nama"] }
+      include: [
+                { model: dataUser, as: "userInputData", attributes: ["nama","username"] },
+                { model: dataUser, as: "userSuntingData", attributes: ["nama","username"] }
+               ]
     })
     .then(data => {
       // if (data.count == 0){
@@ -63,7 +69,7 @@ exports.readAllPegawais = (req, res) =>{
   }    
 }
 
-exports.createPegawais = (req, res) =>{
+exports.create = (req, res) =>{
   const { nama, nip, tmp_lhr, tgl_lhr, status, penginputPeg } = req.body;
   dataPegawai.create({      
     nama,
@@ -84,7 +90,7 @@ exports.createPegawais = (req, res) =>{
   })
 };
 
-exports.readPegawaiById = (req, res) => {
+exports.read = (req, res) => {
   const pegawaiId = req.params.pegawaiId;
 
   dataPegawai.findOne({
@@ -101,7 +107,7 @@ exports.readPegawaiById = (req, res) => {
   })
 }
 
-exports.updatePegawai = (req, res) => {
+exports.update = (req, res) => {
   const pegawaiId = req.params.pegawaiId;
 
   dataPegawai.findOne({
@@ -130,7 +136,7 @@ exports.updatePegawai = (req, res) => {
   })
 }
 
-exports.deletePegawai = (req, res) => {
+exports.destroy = (req, res) => {
   const pegawaiId = req.params.pegawaiId;
 
   dataPegawai.findOne({

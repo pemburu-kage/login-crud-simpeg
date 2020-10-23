@@ -7,5 +7,9 @@ router.get('/halo', (req, res, next) => {
 })
 
 router.use('/golpang', require('./golpang'));
+router.use('/pangkat', require('./pangkat'));
+router.use('/pegawai', require('./pegawai'));
+router.use('/user', require('./user'));
+
 
 module.exports = router;
