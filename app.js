@@ -29,7 +29,3 @@ app.get("*", (err, res) => {
 });
 
 module.exports = app;
-
-
-
-

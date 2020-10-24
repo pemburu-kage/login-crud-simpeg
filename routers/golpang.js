@@ -10,9 +10,12 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/golpang");
+const verifyToken = require('../middlewares/verifyToken')
+const authorizeRole = require('../middlewares/authorizeRole')
+const { ROLE } = require('../libs/constant');
 
 // ini cukup slash aja karena di routers/index.js sudah terdaftar sebagai route /golpang
-router.get("/", controller.readAll);
+router.get("/", verifyToken, authorizeRole([ROLE.ADMIN, ROLE.ESELON_I]), controller.readAll);
 router.post("/", controller.create);
 
 // clean codenya cukup :id aja, karena golpang sudah di dahului di routers/index.js
